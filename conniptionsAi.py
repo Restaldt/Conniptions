@@ -2,11 +2,18 @@ import random
 import numpy as np
 from time import sleep
 import sys
-def checkHueristic(Board):
+def checkHueristic(BoardSet):
+    
     oneH = 0
     zeroeH = 0
-    	
-
+    # print("88888888888888888888888888888888888888888")
+    # for b in BoardSet:
+        # print("-----------------------------------------------------")
+        # printBoard(b)
+    # print("88888888888888888888888888888888888888888")
+    
+    
+    
 def randomPlay(Board):
 
     #print(Board)
@@ -16,6 +23,21 @@ def randomPlay(Board):
     return move
 
 def aiMove(Board):
+    ##checkHueristic(Board)
+    moveSet = []
+    currentBoard = Board
+    for c in range(0,len(Board)):
+        #for x in range(0,len(Board)):
+            #if Board[x][i] == -1:
+        moveSet.append(AddPiece(Board,c,1))
+        Board = currentBoard
+        #printBoard(currentBoard)
+   
+    # Hueristics = checkHueristic(moveSet)
+    # print("................................................")
+    # for b in moveSet:
+        # printBoard(b)
+    # print("................................................")
     return Board
 
     
@@ -300,15 +322,16 @@ draws = 0
 
 RandomVsRandom = False
 playerVsAi = False
-playerVsRandom = False
-playerVsPlayer = False
+RandomVsAi = False
 
-ui = input("Enter which option you want to play: (1-4) \n1. Random Vs Random \n2. Player Vs Random \n3.Player Vs Ai \n4. Player Vs Player \n")
+ui = input("Enter which option you want to play: (1-3) \n1. Random Vs Random \n2. Ai Vs Random \n3.Player Vs Ai \n")
 
 ui = int(ui)
 if ui == 1:
     #print("True")
     RandomVsRandom = True
+if ui == 2:
+    RandomVsAi = True
 
 
 playerTurn = input("Which player will move first? ")
@@ -330,7 +353,7 @@ while not won:
             playerTurn = 0
             Board = checkWin(Board)
 
-        if gamesFinished >= 10000:
+        if gamesFinished >= 5000:
             print(gamesFinished)
             print(str(playerArr[0])+" won: "+str(player0wins))
             print(str(playerArr[1])+" won: "+str(player1wins))
@@ -338,4 +361,48 @@ while not won:
             print("Draws: "+str(draws))
 
             sys.exit()
-  
+    if RandomVsAi == True:
+ 
+        #print("true")
+        if playerTurn == 0:
+            Board = player0turn(playerTurn)
+         
+            playerTurn = 1 
+            Board = checkWin(Board)
+        if playerTurn == 1:
+           #print('playerTurn1')
+            Board = aiMove(Board)
+            playerTurn = 0
+            Board = checkWin(Board)
+
+        if gamesFinished >= 5000:
+            print(gamesFinished)
+            print(str(playerArr[0])+" won: "+str(player0wins))
+            print(str(playerArr[1])+" won: "+str(player1wins))
+        
+            print("Draws: "+str(draws))
+            sys.exit()     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
