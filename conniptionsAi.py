@@ -288,11 +288,6 @@ def printBoard(Board):
 
 playerArr = ['White','Green']
 
-print(playerArr)
-print(playerArr[0])
-print(playerArr[1])
-print(len(playerArr))
-
 columns = 7
 Board = [[-1 for x in range(columns)] for y in range(columns)]
 
@@ -303,8 +298,19 @@ player0wins = 0
 player1wins = 0
 draws = 0
 
+RandomVsRandom = False
+playerVsAi = False
+playerVsRandom = False
+playerVsPlayer = False
 
-print(len(Board))
+ui = input("Enter which option you want to play: (1-4) \n1. Random Vs Random \n2. Player Vs Random \n3.Player Vs Ai \n4. Player Vs Player \n")
+
+ui = int(ui)
+if ui == 1:
+    #print("True")
+    RandomVsRandom = True
+
+
 playerTurn = input("Which player will move first? ")
 playerTurn = int(playerTurn)
 while not won:
@@ -312,22 +318,24 @@ while not won:
     verticalWin = False
     diagonalWin = False
     #print(playerTurn)
-    if playerTurn == 0:
-        Board = player0turn(playerTurn)
-        Board = checkWin(Board)
-        playerTurn = 1
-    if playerTurn == 1:
+    if RandomVsRandom == True:
+        #print("true")
+        if playerTurn == 0:
+            Board = player0turn(playerTurn)
+            Board = checkWin(Board)
+            playerTurn = 1
+        if playerTurn == 1:
         #print('playerTurn1')
-        Board = player1turn(playerTurn)
-        playerTurn = 0
-        Board = checkWin(Board)
+            Board = player1turn(playerTurn)
+            playerTurn = 0
+            Board = checkWin(Board)
 
-    if gamesFinished >= 1000:
-        print(gamesFinished)
-        print(player0wins)
-        print(player1wins)
+        if gamesFinished >= 10000:
+            print(gamesFinished)
+            print(str(playerArr[0])+" won: "+str(player0wins))
+            print(str(playerArr[1])+" won: "+str(player1wins))
         
-        print(draws)
+            print("Draws: "+str(draws))
 
-        sys.exit()
+            sys.exit()
   
