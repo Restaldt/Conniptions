@@ -25,19 +25,29 @@ def randomPlay(Board):
 def aiMove(Board):
     ##checkHueristic(Board)
     moveSet = []
-    currentBoard = Board
+    currentBoard = Flip(Board)
+	
+    # print("................................................")
+    # printBoard(Board)
+    # print("CB................................................")
+    printBoard(currentBoard)	
     for c in range(0,len(Board)):
         #for x in range(0,len(Board)):
             #if Board[x][i] == -1:
         moveSet.append(AddPiece(Board,c,1))
-        Board = currentBoard
+        
+ 
         #printBoard(currentBoard)
    
     # Hueristics = checkHueristic(moveSet)
     # print("................................................")
     # for b in moveSet:
         # printBoard(b)
-    # print("................................................")
+    Board = Flip(currentBoard)
+    # print("NewBoard................................................")
+    # printBoard(Board)
+    # print("CB................................................")
+    # printBoard(currentBoard)
     return Board
 
     
@@ -334,7 +344,7 @@ if ui == 2:
     RandomVsAi = True
 
 
-playerTurn = input("Which player will move first? (0,1) ")
+playerTurn = input("Which player will move first? ")
 playerTurn = int(playerTurn)
 while not won:
     horizonalWin = False
@@ -375,7 +385,7 @@ while not won:
             playerTurn = 0
             Board = checkWin(Board)
 
-        if gamesFinished >= 500:
+        if gamesFinished >= 1:
             print(gamesFinished)
             print(str(playerArr[0])+" won: "+str(player0wins))
             print(str(playerArr[1])+" won: "+str(player1wins))
