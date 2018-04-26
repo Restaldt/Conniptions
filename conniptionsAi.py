@@ -4,11 +4,12 @@ from time import sleep
 import sys
 def checkHueristic(BoardSet):
     
-    oneH = 0
-    zeroH = 0
+    
     temp  = []
     print("*******************************")
     for b in BoardSet:
+        oneH = 0
+        zeroH = 0
         ##verticalH
         # for c in b:
             # sequentialZeros = 0
@@ -43,7 +44,7 @@ def checkHueristic(BoardSet):
                     if sequentialOnes > oneH:
                         oneH = sequentialOnes
 						
-                sequentialOnes = 0
+                    sequentialOnes = 0
                 if Board[x][i] == 1:
                     sequentialOnes += 1
                     if sequentialZeros > zeroH:
