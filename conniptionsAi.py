@@ -35,7 +35,7 @@ def aiMove(Board):
         #for x in range(0,len(Board)):
             #if Board[x][i] == -1:
         moveSet.append(AddPiece(Board,c,1))
-        
+        Board = Flip(currentBoard)
  
         #printBoard(currentBoard)
    
@@ -43,12 +43,12 @@ def aiMove(Board):
     # print("................................................")
     # for b in moveSet:
         # printBoard(b)
-    Board = Flip(currentBoard)
+    #Board = Flip(currentBoard)
     # print("NewBoard................................................")
     # printBoard(Board)
     # print("CB................................................")
     # printBoard(currentBoard)
-    return Board
+    return moveSet[random.randrange(0,len(moveSet))]
 
     
 def reset(Board):
@@ -167,7 +167,7 @@ def checkWin(Board):
             Board = reset(Board)
             return Board
 		
-##diagonalWin
+    ##diagonalWin
     for x in range(0,7):
         sequentialOnes = 0
         sequentialZeros = 0
@@ -385,7 +385,7 @@ while not won:
             playerTurn = 0
             Board = checkWin(Board)
 
-        if gamesFinished >= 1:
+        if gamesFinished >= 500:
             print(gamesFinished)
             print(str(playerArr[0])+" won: "+str(player0wins))
             print(str(playerArr[1])+" won: "+str(player1wins))
