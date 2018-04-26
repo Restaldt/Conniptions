@@ -5,15 +5,94 @@ import sys
 def checkHueristic(BoardSet):
     
     oneH = 0
-    zeroeH = 0
-    # print("88888888888888888888888888888888888888888")
-    # for b in BoardSet:
-        # print("-----------------------------------------------------")
-        # printBoard(b)
-    # print("88888888888888888888888888888888888888888")
-    
-    
-    
+    zeroH = 0
+    temp  = []
+    for b in BoardSet:
+        ##verticalH
+        for c in b:
+            sequentialZeros = 0
+            sequentialOnes = 0
+            for x in c:
+                if x == 0:
+                    sequentialZeros += 1
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                if x == 1:
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                if x == -1:
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+
+        ##horizonalH
+        for i in range(0,len(b)):
+			#v = 0 #placeholder code this does nothing   
+            sequentialOnes = 0
+            sequentialZeros = 0
+            for x in range(0,len(b)):
+                if Board[x][i] == 0:
+                    sequentialZeros += 1
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                if Board[x][i] == 1:
+                    sequentialOnes += 1
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                if Board[x][i] == -1:
+                    if sequentialOnes > 1:
+                        oneH = sequentialOnes
+                    if sequentialZeros >1:
+                        zeroH = sequentialZeros
+						
+        ##diagonalH
+        for i in range(0,7):
+            sequentialOnes = 0
+            sequentialZeros = 0		
+            if (x + 3 <= 6 and i + 3 <= 6):
+                if Board[x][i] == 1:
+                    sequentialOnes += 1
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                    if Board[x+1][i+1] == 1:
+                        sequentialOnes += 1
+                        if sequentialZeros > zeroH:
+                            zeroH = sequentialZeros
+                        if Board[x+2][i+2] == 1:
+                            sequentialOnes += 1
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            if Board[x+3][i+3] == 1:
+                                sequentialOnes += 1
+                               	#player1wins += 1
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                #printBoard(Board)
+                              
+                                #return reset(Board)
+            if (x + 3 <= 6 and i +3 <= 6):
+                if Board[x][i] == 0:
+                    sequentialZeros += 1
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                    if Board[x+1][i+1] == 0:
+                        sequentialZeros += 1
+                        if sequentialOnes > oneH:
+                            oneH = sequentialOnes
+                        if Board[x+2][i+2] == 0:
+                            sequentialZeros += 1
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            if Board[x+3][i+3] == 0:
+                                sequentialZeros += 1
+                               	#player0wins += 1
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+        temp.append((b,oneH,zeroH))
+        
+		#print(temp)
+    return temp
 def randomPlay(Board):
 
     #print(Board)
@@ -48,6 +127,9 @@ def aiMove(Board):
     # printBoard(Board)
     # print("CB................................................")
     # printBoard(currentBoard)
+    tuples = checkHueristic(moveSet)
+    for tuple in tuples:
+        print(str(tuple[1])+" :oneH zeroH: "+str(tuple[2]))
     return moveSet[random.randrange(0,len(moveSet))]
 
     
