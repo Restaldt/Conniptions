@@ -375,7 +375,7 @@ while not won:
             playerTurn = 0
             Board = checkWin(Board)
 
-        if gamesFinished >= 5000:
+        if gamesFinished >= 500:
             print(gamesFinished)
             print(str(playerArr[0])+" won: "+str(player0wins))
             print(str(playerArr[1])+" won: "+str(player1wins))
