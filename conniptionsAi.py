@@ -334,7 +334,7 @@ if ui == 2:
     RandomVsAi = True
 
 
-playerTurn = input("Which player will move first? ")
+playerTurn = input("Which player will move first? (0,1) ")
 playerTurn = int(playerTurn)
 while not won:
     horizonalWin = False
