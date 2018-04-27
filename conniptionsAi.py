@@ -10,6 +10,9 @@ def checkHueristic(BoardSet):
     for b in BoardSet:
         oneH = 0
         zeroH = 0
+        col = -1
+        #print(len(b))
+        #printBoard(b)
         ##verticalH
         # for c in b:
             # sequentialZeros = 0
@@ -34,29 +37,32 @@ def checkHueristic(BoardSet):
                     # sequentialZeros = 0
 
         #horizonalH
+        # tempHorizontalHs = []
         for i in range(0,len(b)):
 			#v = 0 #placeholder code this does nothing   
             sequentialOnes = 0
             sequentialZeros = 0
             for x in range(0,len(b)):
-                if Board[x][i] == 0:
+                if b[x][i] == 0:
                     sequentialZeros += 1
                     if sequentialOnes > oneH:
                         oneH = sequentialOnes
 						
                     sequentialOnes = 0
-                if Board[x][i] == 1:
+                if b[x][i] == 1:
                     sequentialOnes += 1
                     if sequentialZeros > zeroH:
                         zeroH = sequentialZeros
                     sequentialZeros = 0
-                if Board[x][i] == -1:
+                if b[x][i] == -1:
                     if sequentialOnes > 1:
                         oneH = sequentialOnes
                     if sequentialZeros >1:
                         zeroH = sequentialZeros
                     sequentialOnes = 0
                     sequentialZeros = 0
+            # tempHorizontalHs.append((oneH,zeroH))
+        # print(tempHorizontalHs)
         ##diagonalH
         # for i in range(0,7):
             # sequentialOnes = 0
@@ -103,8 +109,9 @@ def checkHueristic(BoardSet):
         print(str(oneH)+" "+str(zeroH))
         # for c in b:
             # print(c)
+       
         printBoard(b)
-        temp.append((b,oneH,zeroH))
+        temp.append((b,oneH,zeroH,col))
         
 		#print(temp)
     print("*******************************")
@@ -166,6 +173,7 @@ def checkWin(Board):
     columns = len(Board)
   
     for column in Board:
+        print(column)
         for x in column:
             if x == -1:
                 fullBoard = False
