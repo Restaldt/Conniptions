@@ -14,30 +14,31 @@ def checkHueristic(BoardSet):
         #print(len(b))
         #printBoard(b)
         ##verticalH
-        # for c in b:
-            # sequentialZeros = 0
-            # sequentialOnes = 0
-            # for x in c:
-                # if x == 0:
-                    # sequentialZeros += 1
-                    # if sequentialOnes > oneH:
-                        # oneH = sequentialOnes
-                    # sequentialOnes = 0
-                # if x == 1:
-                    # sequentialOnes += 1
-                    # if sequentialZeros > zeroH:
-                        # zeroH = sequentialZeros
-                    # sequentialZeros = 0
-                # if x == -1:
-                    # if sequentialOnes > oneH:
-                        # oneH = sequentialOnes
-                    # if sequentialZeros > zeroH:
-                        # zeroH = sequentialZeros
-                    # sequentialOnes = 0
-                    # sequentialZeros = 0
+        for c in b:
+            sequentialZeros = 0
+            sequentialOnes = 0
+            for x in c:
+                if x == 0:
+                    sequentialZeros += 1
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                    sequentialOnes = 0
+                if x == 1:
+                    sequentialOnes += 1
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                    sequentialZeros = 0
+                if x == -1:
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                    sequentialOnes = 0
+                    sequentialZeros = 0
 
         #horizonalH
         # tempHorizontalHs = []
+        #'''
         for i in range(0,len(b)):
 			#v = 0 #placeholder code this does nothing   
             sequentialOnes = 0
@@ -55,57 +56,162 @@ def checkHueristic(BoardSet):
                         zeroH = sequentialZeros
                     sequentialZeros = 0
                 if b[x][i] == -1:
-                    if sequentialOnes > 1:
+                    if sequentialOnes > oneH:
                         oneH = sequentialOnes
-                    if sequentialZeros >1:
+                    if sequentialZeros > zeroH:
                         zeroH = sequentialZeros
                     sequentialOnes = 0
                     sequentialZeros = 0
             # tempHorizontalHs.append((oneH,zeroH))
         # print(tempHorizontalHs)
+        #'''
         ##diagonalH
-        # for i in range(0,7):
-            # sequentialOnes = 0
-            # sequentialZeros = 0		
-            # if (x + 3 <= 6 and i + 3 <= 6):
-                # if Board[x][i] == 1:
-                    # sequentialOnes += 1
-                    # if sequentialZeros > zeroH:
-                        # zeroH = sequentialZeros
-                    # if Board[x+1][i+1] == 1:
-                        # sequentialOnes += 1
-                        # if sequentialZeros > zeroH:
-                            # zeroH = sequentialZeros
-                        # if Board[x+2][i+2] == 1:
-                            # sequentialOnes += 1
-                            # if sequentialZeros > zeroH:
-                                # zeroH = sequentialZeros
-                            # if Board[x+3][i+3] == 1:
-                                # sequentialOnes += 1
-                               	# #player1wins += 1
-                                # if sequentialZeros > zeroH:
-                                    # zeroH = sequentialZeros
-                                # #printBoard(Board)
-                              
-                                # #return reset(Board)
-            # if (x + 3 <= 6 and i +3 <= 6):
-                # if Board[x][i] == 0:
-                    # sequentialZeros += 1
-                    # if sequentialOnes > oneH:
-                        # oneH = sequentialOnes
-                    # if Board[x+1][i+1] == 0:
-                        # sequentialZeros += 1
-                        # if sequentialOnes > oneH:
-                            # oneH = sequentialOnes
-                        # if Board[x+2][i+2] == 0:
-                            # sequentialZeros += 1
-                            # if sequentialOnes > oneH:
-                                # oneH = sequentialOnes
-                            # if Board[x+3][i+3] == 0:
-                                # sequentialZeros += 1
-                               	# #player0wins += 1
-                                # if sequentialOnes > oneH:
-                                    # oneH = sequentialOnes
+        for x in range(0,7):
+            sequentialOnes = 0
+            sequentialZeros = 0
+            for i in range(0,7):
+                #'''
+                if (x + 3 <= 6 and i + 3 <= 6):
+                    if b[x][i] == 1:
+                        sequentialOnes += 1
+                        if sequentialZeros > zeroH:
+                            zeroH = sequentialZeros
+
+                        sequentialZeros = 0
+                        if b[x+1][i+1] == 1:
+                            sequentialOnes += 1
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                            if b[x+2][i+2] == 1:
+                                sequentialOnes += 1
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                                if b[x+3][i+3] == 1:
+                                    sequentialOnes += 1
+                                    #player1wins += 1
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                                    #print(b)
+                                  
+                                    #return reset(b)
+                                if b[x+3][i+3]== -1 or b[x+3][i+3] == 0:
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                            if b[x+2][i+2] == -1 or b[x+3][i+3] == 0:
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                        if b[x+1][i+1] == -1 or b[x+3][i+3] == 0:
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0
+
+
+                    if b[x][i] == 0:
+                        sequentialZeros += 1
+                        if sequentialOnes > oneH:
+                            oneH = sequentialOnes
+                        sequentialOnes = 0
+                        if b[x+1][i+1] == 0:
+                            sequentialZeros += 1
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0
+                            if b[x+2][i+2] == 0:
+                                sequentialZeros += 1
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                                if b[x+3][i+3] == 0:
+                                    sequentialZeros += 1
+                                    #player0wins += 1
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                                if b[x+3][i+3]== -1 or b[x+3][i+3] == 1:
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                            if b[x+2][i+2] == -1 or b[x+3][i+3] == 1:
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                        if b[x+1][i+1] == -1 or b[x+3][i+3] == 1:
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                    #'''
+                if (x >= 3 and i <= 3):
+                    if b[x][i] == 1:
+                        sequentialOnes += 1
+                        if sequentialZeros > zeroH:
+                            zeroH = sequentialZeros
+                        sequentialZeros = 0
+                        if b[x-1][i+1] == 1:
+                            sequentialOnes += 1
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                            if b[x-2][i+2] == 1:
+                                sequentialOnes += 1
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                                if b[x-3][i+3] == 1:
+                                    sequentialOnes += 1
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                                else:
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                            else: 
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                        else:
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0  
+                if (x >= 3 and i <= 3):
+                    if b[x][i] == 0:
+                        sequentialZeros += 1
+                        if sequentialOnes > oneH:
+                            oneH = sequentialOnes
+                        sequentialOnes = 0
+                        if b[x-1][i+1] == 0:
+                            sequentialZeros += 1
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0
+                            if b[x-2][i+2] == 0:
+                                sequentialZeros += 1
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                                if b[x-3][i+3] == 0:
+                                    sequentialZeros += 1
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                                else:
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                            else: 
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                        else:
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                    #'''
         print(str(oneH)+" "+str(zeroH))
         # for c in b:
             # print(c)
