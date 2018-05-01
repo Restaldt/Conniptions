@@ -2,11 +2,228 @@ import random
 import numpy as np
 from time import sleep
 import sys
-def checkHueristic(Board):
-    oneH = 0
-    zeroeH = 0
-    	
+def checkHueristic(BoardSet):
+    
+    
+    temp  = []
+    print("*******************************")
+    for b in BoardSet:
+        oneH = 0
+        zeroH = 0
+        sequentialZeros = 0
+        sequentialOnes = 0
+        col = -1
+        # print(b[0])
+        # print(b[1])
+        #printBoard(b)
+        ##verticalH
+        for c in b[1]:
+            sequentialZeros = 0
+            sequentialOnes = 0
+            for x in c:
+                if x == 0:
+                    sequentialZeros += 1
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                    sequentialOnes = 0
+                if x == 1:
+                    sequentialOnes += 1
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                    sequentialZeros = 0
+                if x == -1:
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                    sequentialOnes = 0
+                    sequentialZeros = 0
 
+        #horizonalH
+        # tempHorizontalHs = []
+        #'''
+        for i in range(0,len(b[1])):
+			#v = 0 #placeholder code this does nothing   
+            sequentialOnes = 0
+            sequentialZeros = 0
+            for x in range(0,len(b[1])):
+                if b[1][x][i] == 0:
+                    sequentialZeros += 1
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+						
+                    sequentialOnes = 0
+                if b[1][x][i] == 1:
+                    sequentialOnes += 1
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                    sequentialZeros = 0
+                if b[1][x][i] == -1:
+                    if sequentialOnes > oneH:
+                        oneH = sequentialOnes
+                    if sequentialZeros > zeroH:
+                        zeroH = sequentialZeros
+                    sequentialOnes = 0
+                    sequentialZeros = 0
+        # print(tempHorizontalHs)
+        #'''
+        ##diagonalH
+        for x in range(0,len(b[1])):
+            sequentialOnes = 0
+            sequentialZeros = 0
+            for i in range(0,len(b[1])):
+                #'''
+                if (x + 3 <= 6 and i + 3 <= 6):
+                    if b[1][x][i] == 1:
+                        sequentialOnes += 1
+                        if sequentialZeros > zeroH:
+                            zeroH = sequentialZeros
+
+                        sequentialZeros = 0
+                        if b[1][x+1][i+1] == 1:
+                            sequentialOnes += 1
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                            if b[1][x+2][i+2] == 1:
+                                sequentialOnes += 1
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                                if b[1][x+3][i+3] == 1:
+                                    sequentialOnes += 1
+                                    #player1wins += 1
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                                    #print(b[1])
+                                  
+                                    #return reset(b[1])
+                                if b[1][x+3][i+3]== -1 or b[1][x+3][i+3] == 0:
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                            if b[1][x+2][i+2] == -1 or b[1][x+3][i+3] == 0:
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                        if b[1][x+1][i+1] == -1 or b[1][x+3][i+3] == 0:
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0
+
+
+                    if b[1][x][i] == 0:
+                        sequentialZeros += 1
+                        if sequentialOnes > oneH:
+                            oneH = sequentialOnes
+                        sequentialOnes = 0
+                        if b[1][x+1][i+1] == 0:
+                            sequentialZeros += 1
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0
+                            if b[1][x+2][i+2] == 0:
+                                sequentialZeros += 1
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                                if b[1][x+3][i+3] == 0:
+                                    sequentialZeros += 1
+                                    #player0wins += 1
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                                if b[1][x+3][i+3]== -1 or b[1][x+3][i+3] == 1:
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                            if b[1][x+2][i+2] == -1 or b[1][x+3][i+3] == 1:
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                        if b[1][x+1][i+1] == -1 or b[1][x+3][i+3] == 1:
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                    #'''
+                if (x >= 3 and i <= 3):
+                    if b[1][x][i] == 1:
+                        sequentialOnes += 1
+                        if sequentialZeros > zeroH:
+                            zeroH = sequentialZeros
+                        sequentialZeros = 0
+                        if b[1][x-1][i+1] == 1:
+                            sequentialOnes += 1
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                            if b[1][x-2][i+2] == 1:
+                                sequentialOnes += 1
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                                if b[1][x-3][i+3] == 1:
+                                    sequentialOnes += 1
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                                else:
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                            else: 
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                        else:
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0  
+                if (x >= 3 and i <= 3):
+                    if b[1][x][i] == 0:
+                        sequentialZeros += 1
+                        if sequentialOnes > oneH:
+                            oneH = sequentialOnes
+                        sequentialOnes = 0
+                        if b[1][x-1][i+1] == 0:
+                            sequentialZeros += 1
+                            if sequentialOnes > oneH:
+                                oneH = sequentialOnes
+                            sequentialOnes = 0
+                            if b[1][x-2][i+2] == 0:
+                                sequentialZeros += 1
+                                if sequentialOnes > oneH:
+                                    oneH = sequentialOnes
+                                sequentialOnes = 0
+                                if b[1][x-3][i+3] == 0:
+                                    sequentialZeros += 1
+                                    if sequentialOnes > oneH:
+                                        oneH = sequentialOnes
+                                    sequentialOnes = 0
+                                else:
+                                    if sequentialZeros > zeroH:
+                                        zeroH = sequentialZeros
+                                    sequentialZeros = 0
+                            else: 
+                                if sequentialZeros > zeroH:
+                                    zeroH = sequentialZeros
+                                sequentialZeros = 0
+                        else:
+                            if sequentialZeros > zeroH:
+                                zeroH = sequentialZeros
+                            sequentialZeros = 0
+                    #'''
+        #print(str(oneH)+" "+str(zeroH))
+        # for c in b:
+            # print(c)
+       
+        #printBoard(b[1])
+        temp.append((b,oneH,zeroH))
+        
+		#print(temp)
+    print("*******************************")
+    return temp
 def randomPlay(Board):
 
     #print(Board)
@@ -16,7 +233,55 @@ def randomPlay(Board):
     return move
 
 def aiMove(Board):
-    return Board
+    ##checkHueristic(Board)
+    moveSet = []
+    currentBoard = Flip(Board)
+	
+    # print("................................................")
+    # printBoard(Board)
+    # print("CB................................................")
+    #printBoard(currentBoard)	
+    for c in range(0,len(Board)):
+        #for x in range(0,len(Board)):
+            #if Board[x][i] == -1:
+        moveSet.append(((0,c,0),AddPiece(Board,c,1)))
+        Board = Flip(currentBoard)
+        #tb = Flip(Board)
+        moveSet.append(((1,c,0),AddPiece(Flip(Board),c,1)))
+        Board = Flip(currentBoard)
+
+        moveSet.append(((0,c,1),Flip(AddPiece(Board,c,1))))
+        Board = Flip(currentBoard)
+ 
+        #printBoard(currentBoard)
+   
+    # Hueristics = checkHueristic(moveSet)
+    # print("................................................")
+    # for b in moveSet:
+        # printBoard(b)
+    #Board = Flip(currentBoard)
+    # print("NewBoard................................................")
+    # printBoard(Board)
+    # print("CB................................................")
+    # printBoard(currentBoard)
+    tuples = checkHueristic(moveSet)
+
+    print("Length of tuples: "+str(len(tuples)))
+    maxH = -10
+    bestMove = ()
+    for tuple in tuples:
+        print(str(tuple[1])+" :oneH zeroH: "+str(tuple[2]))
+        print("Move: "+str(tuple[0][0]))
+        printBoard(tuple[0][1])
+        calculatedH = tuple[1] - tuple[2]
+
+        if calculatedH > maxH:
+            maxH = calculatedH
+            bestMove = tuple
+
+    print("Move: "+ str(bestMove[0][0]))
+
+    return bestMove[0][1]
 
     
 def reset(Board):
@@ -36,6 +301,7 @@ def checkWin(Board):
     columns = len(Board)
   
     for column in Board:
+        print(column)
         for x in column:
             if x == -1:
                 fullBoard = False
@@ -135,7 +401,7 @@ def checkWin(Board):
             Board = reset(Board)
             return Board
 		
-##diagonalWin
+    ##diagonalWin
     for x in range(0,7):
         sequentialOnes = 0
         sequentialZeros = 0
@@ -300,15 +566,16 @@ draws = 0
 
 RandomVsRandom = False
 playerVsAi = False
-playerVsRandom = False
-playerVsPlayer = False
+RandomVsAi = False
 
-ui = input("Enter which option you want to play: (1-4) \n1. Random Vs Random \n2. Player Vs Random \n3.Player Vs Ai \n4. Player Vs Player \n")
+ui = input("Enter which option you want to play: (1-3) \n1. Random Vs Random \n2. Ai Vs Random \n3.Player Vs Ai \n")
 
 ui = int(ui)
 if ui == 1:
     #print("True")
     RandomVsRandom = True
+if ui == 2:
+    RandomVsAi = True
 
 
 playerTurn = input("Which player will move first? ")
@@ -330,7 +597,7 @@ while not won:
             playerTurn = 0
             Board = checkWin(Board)
 
-        if gamesFinished >= 10000:
+        if gamesFinished >= 5000:
             print(gamesFinished)
             print(str(playerArr[0])+" won: "+str(player0wins))
             print(str(playerArr[1])+" won: "+str(player1wins))
@@ -338,4 +605,48 @@ while not won:
             print("Draws: "+str(draws))
 
             sys.exit()
-  
+    if RandomVsAi == True:
+ 
+        #print("true")
+        if playerTurn == 0:
+            Board = player0turn(playerTurn)
+         
+            playerTurn = 1 
+            Board = checkWin(Board)
+        if playerTurn == 1:
+           #print('playerTurn1')
+            Board = aiMove(Board)
+            playerTurn = 0
+            Board = checkWin(Board)
+
+        if gamesFinished >= 100:
+            print(gamesFinished)
+            print(str(playerArr[0])+" won: "+str(player0wins))
+            print(str(playerArr[1])+" won: "+str(player1wins))
+        
+            print("Draws: "+str(draws))
+            sys.exit()     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				
